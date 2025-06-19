@@ -1,0 +1,42 @@
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adminer
+  namespace: pingpong
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: adminer
+  template:
+    metadata:
+      labels:
+        app: adminer
+    spec:
+      containers:
+      - name: adminer
+        image: adminer:latest
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+#  Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: adminer-service
+  namespace: pingpong
+spec:
+  selector:
+    app: adminer
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP

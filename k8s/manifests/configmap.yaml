@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pingpong-config
+  namespace: pingpong
+data:
+  HOST: "postgres-service"
+  USERNAME: "postgres"
+  DATABASE: "pingpong"
+  POSTGRES_DB: "pingpong"
+  HOST_APP: "backend-service"
+  PORT: "3001"
+  OAUTH_GOOGLE_REDIRECT_URL: "http://localhost:3001/auth/google/callback"
+  OAUTH_INTRA_REDIRECT_URL: "http://localhost:3001/auth/intra/callback"
+  DEFAULTIMAGECHATROOM: "https://res.cloudinary.com/doymqpyfk/image/upload/v1697945199/Daco_261299_d6ycty.png"
