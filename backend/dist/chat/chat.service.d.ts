@@ -1,0 +1,84 @@
+import { UpdateChatDto } from './dto/update-chat.dto';
+import { Repository } from 'typeorm';
+import { User } from 'src/typeorm/entities/User.entity';
+import { Profile } from 'src/typeorm/entities/Profile.entity';
+import { Relation } from 'src/typeorm/entities/Relation.entity';
+import { HistoryEntity } from 'src/typeorm/entities/History.entity';
+import { Achievement } from 'src/typeorm/entities/Achievement.entity';
+import { MessageChatDto } from './dto/message-chat.dto';
+import { Chat } from 'src/typeorm/entities/chat-entity';
+import { Message } from 'src/typeorm/entities/message-entity';
+import { ChatRoom } from 'src/typeorm/entities/chat-room.entity';
+import { ChatRoomUser } from 'src/typeorm/entities/chat-room-users.entity';
+import { CreateChatRoomDto } from './dto/create-chatRoom.dto';
+import { JoinUsertoChatRoom } from './dto/join-user-to-chatRoom.dto';
+import { SendMessageToChatRoom } from './dto/send-message-to-chatRomm';
+import { GetChatRoomMessages } from './dto/get-chatRoom-messages';
+import { JoinChatRoom } from './dto/join-chat-room';
+import { BanUserDto } from './dto/ban-user.dto';
+import { KickUserDto } from './dto/kick-user.dto';
+import { MuteUserDto } from './dto/mut-user.dto';
+import { ChatRoomOfUserDto } from './dto/chatRoom-of-user.dto';
+import { LeaveChatRoomDto } from './dto/leave-ChatRoom.dto';
+import { JoinRoom } from './dto/join-room.dto';
+import { UnmuteUserDto } from './dto/unmute-user.dto';
+import { UsersOfChatRoom } from './dto/users-of-chatRoom.dto';
+import { AuthService } from 'src/auth/auth.service';
+import { Socket, Server } from 'socket.io';
+import { updateChatRoom } from './dto/update-chat-room.dto';
+export declare class ChatService {
+    private userRepository;
+    private profileRepository;
+    private relationRepository;
+    private historyRepository;
+    private achievementRepository;
+    private messageRepository;
+    private chatRepository;
+    private chatRoomRepository;
+    private chatRoomUserRepository;
+    private readonly authService;
+    constructor(userRepository: Repository<User>, profileRepository: Repository<Profile>, relationRepository: Repository<Relation>, historyRepository: Repository<HistoryEntity>, achievementRepository: Repository<Achievement>, messageRepository: Repository<Message>, chatRepository: Repository<Chat>, chatRoomRepository: Repository<ChatRoom>, chatRoomUserRepository: Repository<ChatRoomUser>, authService: AuthService);
+    rooms: Map<string, Socket[]>;
+    createChatDirect(createChatDto: any, clientId: any, server: any): Promise<any>;
+    private generateUniqueRoomName;
+    createChatRoom(createChatRoomDto: CreateChatRoomDto): Promise<any>;
+    uploadImageToCould(fileUrl: string): Promise<any>;
+    joinUserToChatRoom(joinUserToChatRoom: JoinUsertoChatRoom): Promise<any>;
+    sendMessage(sendMessageToChatRoom: SendMessageToChatRoom, clientId: Socket, server: Server): Promise<any>;
+    findAllChatRoomConversation(getChatRoomMessages: GetChatRoomMessages): Promise<any>;
+    joinChatRoomWithAdmin(joinChatRoom: JoinChatRoom): Promise<any>;
+    findConversationBetweenUsers(createChatDto: MessageChatDto): Promise<Chat[]>;
+    findMessageById(id: number): Promise<Chat>;
+    update(updateChatDto: UpdateChatDto): Promise<Chat>;
+    getClientName(username: string): Promise<string | null>;
+    remove(updateChatDto: UpdateChatDto): Promise<any>;
+    removeConversation(updateChatDto: UpdateChatDto): Promise<any>;
+    banUser(banUserDto: BanUserDto): Promise<{
+        message: string;
+    }>;
+    kickUser(kickUserDto: KickUserDto): Promise<{
+        message: string;
+    }>;
+    muteUser(muteUserDto: MuteUserDto): Promise<{
+        message: string;
+    }>;
+    getAllChatRoomOfUser(chatRoomOfUserDto: ChatRoomOfUserDto): Promise<any>;
+    unbannedUser(unbannedUserDtoo: BanUserDto): Promise<{
+        message: string;
+    }>;
+    changePermissionToUser(changePermissionToUserDto: BanUserDto): Promise<any>;
+    leaveChatRoom(leaveChatRoomDto: LeaveChatRoomDto, server: Server): Promise<any>;
+    deleteChatRoom(deleteChatRoomDto: LeaveChatRoomDto, server: Server): Promise<any>;
+    getAllChatRoom(chatRoomOfUserDto: ChatRoomOfUserDto): Promise<any>;
+    joinChatRoom(joinRoom: JoinRoom): Promise<any>;
+    unmuteUser(unmuteUserDto: UnmuteUserDto): Promise<any>;
+    getAllUserOfChatRoom(usersOfChatRoom: UsersOfChatRoom): Promise<any>;
+    updateChatRoomInfo(updateChatRoomInf: updateChatRoom, server: Server): Promise<any>;
+    addUserWithSocketId(username: string, clientId: Socket): Promise<void>;
+    gitAllUsers(): Promise<any>;
+    isconnected: Map<string, Socket[]>;
+    connectedClients: Map<string, {
+        socket: Socket;
+        username: string;
+    }>;
+}
