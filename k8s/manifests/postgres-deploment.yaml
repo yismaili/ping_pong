@@ -1,4 +1,3 @@
-# Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -44,18 +43,3 @@ spec:
       - name: postgres-storage
         persistentVolumeClaim:
           claimName: postgres-pvc
-
-# Service
-apiVersion: v1
-kind: Service
-metadata:
-  name: postgres-service
-  namespace: pingpong
-spec:
-  selector:
-    app: postgres
-  ports:
-    - protocol: TCP
-      port: 5432
-      targetPort: 5432
-  type: ClusterIP

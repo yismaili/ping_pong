@@ -1,4 +1,3 @@
-# Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,7 +15,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: your-registry/pingpong-backend:latest
+        image: localhost:5000/pingpong-backend:latest
         ports:
         - containerPort: 3001
         envFrom:
@@ -43,18 +42,3 @@ spec:
             port: 3001
           initialDelaySeconds: 5
           periodSeconds: 5
-
-# Service
-apiVersion: v1
-kind: Service
-metadata:
-  name: backend-service
-  namespace: pingpong
-spec:
-  selector:
-    app: backend
-  ports:
-    - protocol: TCP
-      port: 3001
-      targetPort: 3001
-  type: ClusterIP
